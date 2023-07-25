@@ -82,9 +82,7 @@ h1 {
 
 .between {
   font-size: 1.4rem;
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
+  padding-bottom: 2rem;
 }
 
 .again {
