@@ -30,17 +30,51 @@ function randomNumber() {
     document.querySelector(".left").classList.remove("hide");
     document.querySelector(".right").classList.remove("hide");
     message.innerHTML = "Start guessing...";
+    again.classList.add("again2");
   });
 }
 
 // Checking the users input against the random generated number.
 function checkGuess() {
+  guess.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      userGuess = Number(guess.value);
+      if (scoreCount < 1) {
+        message.innerHTML = "💥 You Lost the Game!";
+        document.body.classList.add("lost");
+        again.classList.remove("hide");
+        document.querySelector(".left").classList.add("hide");
+        again.innerHTML = "Play Again!";
+      } else if (guess.value === "") {
+        message.innerHTML = "⛔️ No Number!";
+      } else if (userGuess === myNumber) {
+        message.innerHTML = "🎉 Correct Number!";
+        highscoreArr.push(scoreCount);
+        resultCounter.innerHTML = scoreCount;
+        highestScoreFunc();
+        document.body.classList.add("won");
+        again.classList.remove("hide");
+        again.innerHTML = "Play Again!";
+        document.querySelector(".left").classList.add("hide");
+      } else if (userGuess > myNumber) {
+        message.innerHTML = "📈 Too High!";
+        scoreCount -= 1;
+      } else if (userGuess < myNumber) {
+        message.innerHTML = "📉 Too Low!";
+        scoreCount -= 1;
+      }
+    }
+    score.innerHTML = scoreCount;
+  });
+
   checkGuessBtn.addEventListener("click", () => {
     userGuess = Number(guess.value);
-
     if (scoreCount < 1) {
       message.innerHTML = "💥 You Lost the Game!";
       document.body.classList.add("lost");
+      again.classList.remove("hide");
+      document.querySelector(".left").classList.add("hide");
+      again.innerHTML = "Play Again!";
     } else if (guess.value === "") {
       message.innerHTML = "⛔️ No Number!";
     } else if (userGuess === myNumber) {
@@ -50,6 +84,7 @@ function checkGuess() {
       highestScoreFunc();
       document.body.classList.add("won");
       again.classList.remove("hide");
+      again.innerHTML = "Play Again!";
       document.querySelector(".left").classList.add("hide");
     } else if (userGuess > myNumber) {
       message.innerHTML = "📈 Too High!";
@@ -58,6 +93,7 @@ function checkGuess() {
       message.innerHTML = "📉 Too Low!";
       scoreCount -= 1;
     }
+
     score.innerHTML = scoreCount;
   });
 }
